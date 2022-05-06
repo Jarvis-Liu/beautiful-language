@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-bg-color: #fff;
+}
 html,body {
   font-size: 16px;
+}
+body {
+  /* background: var(--main-bg-color); */
 }
 
 @font-face{
