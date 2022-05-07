@@ -2,7 +2,7 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-06 21:38:00
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-06 23:45:11
+ * @LastEditTime: 2022-05-07 14:10:21
  * @FilePath: \beautiful-language\src\views\highQuality\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,9 +25,9 @@
         />
       </template>
     </div>
-    <div class="operation flex">
+    <div class="operation flex justify-center">
       <div
-        class="btn p-10"
+        class="btn px-5 py-2 rounded-lg tracking-widest"
         @click="handleSave"
       >
         保存
@@ -64,17 +64,33 @@ onMounted(() => {
   })
 })
 const handleSave = () => {
-  html2canvas(content.value, {
-    useCORS: true,
-    allowTaint: true
-  }).then(function (canvas) {
-    document.body.appendChild(canvas)
-    // const a = document.createElement('a')
-    // a.href = canvas.toDataURL('image/png')
-    // a.download = '分享二维码'
-    // a.click()
+  html2canvas(content.value).then(function (canvas) {
+    // document.documentElement.appendChild(canvas)
+    const base64 = canvas.toDataURL('image/png')
+    dowaload(dataURLtoBlob(base64))
   })
 }
+
+const dataURLtoBlob = (dataurl) => {
+  const arr = dataurl.split(',')
+  const mime = arr[0].match(/:(.*?);/)[1]
+  const bstr = window.atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  return new Blob([u8arr], { type: mime })
+}
+
+const dowaload = (blob) => {
+  const a = document.createElement('a')
+  a.download = `${new Date().getTime()}.jpg`
+  a.innerHTML = 'download'
+  a.href = URL.createObjectURL(blob)
+  a.click()
+}
+
 </script>
 
 <style lang="less">

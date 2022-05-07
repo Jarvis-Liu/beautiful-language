@@ -2,7 +2,7 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-06 21:48:48
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-06 23:48:13
+ * @LastEditTime: 2022-05-07 14:08:46
  * @FilePath: \beautiful-language\src\views\highQuality\components\messageCard.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,7 +13,7 @@
     </div>
     <div
       contenteditable="true"
-      class="bubble text-2xl px-4 ml-2.5 mr-4 rounded-lg font-semibold tracking-widest"
+      class="bubble text-2xl p-4 ml-2.5 mr-4 rounded-lg font-semibold tracking-widest"
       @focus="handleContentFocus"
       @blur="handleContentBlur"
     >
@@ -50,9 +50,7 @@ const handleContentBlur = () => {
   background: #2e2e2e;
   color: rgba(255, 255, 255, .7);
   position: relative;
-  line-height: 1.2;
-  padding-top: 10px;
-  padding-bottom: 0px;
+  line-height: 1.8rem;
   &:focus {
     outline:none;
     border:none;
