@@ -2,14 +2,14 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-06 21:38:00
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-07 17:45:05
+ * @LastEditTime: 2022-05-07 18:18:23
  * @FilePath: \beautiful-language\src\views\highQuality\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div
     ref="container"
-    class="container max-w-xl h-screen my-0 mx-auto"
+    class="container max-w-xl h-screen my-0 mx-auto pb-16"
   >
     <Loading v-if="isShowLoading" />
     <name-confirm
@@ -33,7 +33,7 @@
           />
         </template>
       </div>
-      <div class="operation flex justify-center">
+      <div class="operation px-8 grid grid-rows-1 grid-flow-col gap-4">
         <div
           class="btn"
           @click="handleSave"
@@ -46,10 +46,16 @@
         >
           重置
         </div>
+        <div
+          class="btn"
+          @click="handleChangeName"
+        >
+          更换称号
+        </div>
       </div>
     </div>
 
-    <i class="font-ali w-0 h-0 invisible">
+    <i class="font-ali fixed z-0 w-0 h-0 invisible">
       site
     </i>
   </div>
@@ -79,7 +85,6 @@ onMounted(() => {
   document.fonts.ready.then(function () {
     flagFont.value = true
     isShowLoading.value = false
-    isShowArea.value = true
   }).catch(() => {
     console.log('字体文件加载失败')
   })
@@ -144,6 +149,10 @@ const handleReset = () => {
 const updateContent = (index, value) => {
   contentList[index] = value
 }
+const handleChangeName = (index, value) => {
+  handleReset()
+  isShowArea.value = false
+}
 
 </script>
 
@@ -152,6 +161,7 @@ const updateContent = (index, value) => {
 .container {
   background: @bg-color;
   min-height: 100vh;
+  overflow-x: hidden;
   .content {
     background: @bg-color;
   }
