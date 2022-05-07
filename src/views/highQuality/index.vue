@@ -2,7 +2,7 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-06 21:38:00
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-07 18:18:23
+ * @LastEditTime: 2022-05-07 20:44:05
  * @FilePath: \beautiful-language\src\views\highQuality\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -104,12 +104,12 @@ const handleSave = () => {
   html2canvas(content.value).then(function (canvas) {
     // document.documentElement.appendChild(canvas)
     const base64 = canvas.toDataURL('image/png')
-    dowaload(dataURLtoBlob(base64))
+    download(dataURLtoBlob(base64))
   })
 }
 
-const dataURLtoBlob = (dataurl) => {
-  const arr = dataurl.split(',')
+const dataURLtoBlob = (dataUrl) => {
+  const arr = dataUrl.split(',')
   const mime = arr[0].match(/:(.*?);/)[1]
   const bstr = window.atob(arr[1])
   let n = bstr.length
@@ -120,7 +120,7 @@ const dataURLtoBlob = (dataurl) => {
   return new Blob([u8arr], { type: mime })
 }
 
-const dowaload = (blob) => {
+const download = (blob) => {
   const a = document.createElement('a')
   a.download = `${new Date().getTime()}.jpg`
   a.innerHTML = 'download'
