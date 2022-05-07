@@ -2,7 +2,7 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-06 21:48:48
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-07 14:08:46
+ * @LastEditTime: 2022-05-07 17:44:35
  * @FilePath: \beautiful-language\src\views\highQuality\components\messageCard.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,6 +16,7 @@
       class="bubble text-2xl p-4 ml-2.5 mr-4 rounded-lg font-semibold tracking-widest"
       @focus="handleContentFocus"
       @blur="handleContentBlur"
+      @input="handleContentInput($event)"
     >
       {{ content }}
     </div>
@@ -23,8 +24,8 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-defineProps({
+import { defineProps, defineEmits } from 'vue'
+const props = defineProps({
   name: {
     type: String,
     default: ''
@@ -34,16 +35,21 @@ defineProps({
     default: ''
   }
 })
+const emit = defineEmits(['updateContent'])
+
 const handleContentFocus = () => {
   document.documentElement.style.setProperty('--main-bg-color', '#111')
 }
 const handleContentBlur = () => {
   document.documentElement.style.setProperty('--main-bg-color', '#fff')
 }
+const handleContentInput = (e) => {
+  emit('updateContent', e.target.innerText)
+}
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .message-card {
 }
 .bubble {
