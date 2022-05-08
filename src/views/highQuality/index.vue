@@ -1,16 +1,13 @@
 <!--
  * @Author: Jarvis 823867852@qq.com
- * @Date: 2022-05-06 21:38:00
+ * @Date: 2022-05-08 12:44:14
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-07 20:44:05
+ * @LastEditTime: 2022-05-08 21:34:25
  * @FilePath: \beautiful-language\src\views\highQuality\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <div
-    ref="container"
-    class="container max-w-xl h-screen my-0 mx-auto pb-16"
-  >
+  <div ref="container" class="container max-w-xl h-screen my-0 mx-auto pb-16">
     <Loading v-if="isShowLoading" />
     <name-confirm
       v-if="!isShowArea"
@@ -18,52 +15,30 @@
       @set-is-show-area="setIsShowArea"
     />
     <div v-if="isShowArea && !isShowLoading">
-      <div
-        ref="content"
-        class="content pt-4 pb-16"
-      >
-        <template
-          v-for="(item,index) in contentList"
-          :key="index"
-        >
+      <div ref="content" class="content pt-4 pb-16">
+        <template v-for="(item, index) in contentList" :key="index">
           <message-card
             :name="name"
             :content="item"
-            @update-content="updateContent(index,$event)"
+            @update-content="updateContent(index, $event)"
           />
         </template>
       </div>
       <div class="operation px-8 grid grid-rows-1 grid-flow-col gap-4">
-        <div
-          class="btn"
-          @click="handleSave"
-        >
-          保存
-        </div>
-        <div
-          class="btn"
-          @click="handleReset"
-        >
-          重置
-        </div>
-        <div
-          class="btn"
-          @click="handleChangeName"
-        >
-          更换称号
-        </div>
+        <div class="btn" @click="handleSave">保存</div>
+        <div class="btn" @click="handleReset">重置</div>
+        <div class="btn" @click="handleChangeName">更换称号</div>
       </div>
     </div>
 
-    <i class="font-ali fixed z-0 w-0 h-0 invisible">
-      site
-    </i>
+    <i class="font-ali fixed z-0 w-0 h-0 invisible"> site </i>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import html2canvas from 'html2canvas'
+import { dataURLtoBlob } from '@/utils/tools'
 import messageCard from './components/messageCard.vue'
 import nameConfirm from './components/nameConfirm.vue'
 import Loading from '@/components/MLoading.vue'
@@ -82,42 +57,14 @@ const contentList = reactive([
 ])
 let baseHeight = 0
 onMounted(() => {
-  document.fonts.ready.then(function () {
-    flagFont.value = true
-    isShowLoading.value = false
-  }).catch(() => {
-    console.log('字体文件加载失败')
-  })
-  baseHeight = document.documentElement.clientHeight
-  window.onresize = () => {
-    if (document.documentElement.clientHeight < baseHeight) {
-      container.value.style.height = `${baseHeight}px`
-    } else {
-      container.value.style.height = ''
-    }
-  }
-  onBeforeUnmount(() => {
-    window.onresize = null
-  })
+  fontLoadListener()
+  handleScreenResize()
 })
 const handleSave = () => {
   html2canvas(content.value).then(function (canvas) {
-    // document.documentElement.appendChild(canvas)
     const base64 = canvas.toDataURL('image/png')
     download(dataURLtoBlob(base64))
   })
-}
-
-const dataURLtoBlob = (dataUrl) => {
-  const arr = dataUrl.split(',')
-  const mime = arr[0].match(/:(.*?);/)[1]
-  const bstr = window.atob(arr[1])
-  let n = bstr.length
-  const u8arr = new Uint8Array(n)
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n)
-  }
-  return new Blob([u8arr], { type: mime })
 }
 
 const download = (blob) => {
@@ -153,7 +100,29 @@ const handleChangeName = (index, value) => {
   handleReset()
   isShowArea.value = false
 }
-
+const fontLoadListener = () => {
+  document.fonts.ready
+    .then(function () {
+      flagFont.value = true
+      isShowLoading.value = false
+    })
+    .catch(() => {
+      console.log('字体文件加载失败')
+    })
+}
+const handleScreenResize = () => {
+  baseHeight = document.documentElement.clientHeight
+  window.onresize = () => {
+    if (document.documentElement.clientHeight < baseHeight) {
+      container.value.style.height = `${baseHeight}px`
+    } else {
+      container.value.style.height = ''
+    }
+  }
+  onBeforeUnmount(() => {
+    window.onresize = null
+  })
+}
 </script>
 
 <style lang="less" scoped>
@@ -170,5 +139,4 @@ const handleChangeName = (index, value) => {
     color: @bg-color;
   }
 }
-
 </style>
