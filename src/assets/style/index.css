@@ -8,9 +8,6 @@
 html,body {
   font-size: 16px;
 }
-body {
-  /* background: var(--main-bg-color); */
-}
 
 @font-face{
   font-family: Alipuhui;
@@ -23,4 +20,9 @@ body {
 
 .btn {
   @apply inline-block px-5 py-2 rounded-lg tracking-widest cursor-pointer;
+}
+
+/* tailwind base 中引起文字偏移的属性 */
+img {
+  display: unset;
 }
