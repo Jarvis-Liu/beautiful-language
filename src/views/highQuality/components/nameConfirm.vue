@@ -9,22 +9,15 @@
 <template>
   <div class="name-confirm max-w-xl w-screen">
     <div class="content w-full">
-      <p class="title text-3xl">
-        请输入你的称号
-      </p>
+      <p class="title text-3xl">请输入你的称号</p>
       <input
         v-model="name"
         class="w-1/2 h-10 my-4 px-4 rounded-lg text-gray-600"
         type="text"
         @input="$emit('update:name', $event.target.value)"
-      >
+      />
       <div>
-        <div
-          class="btn"
-          @click="handleConfirm"
-        >
-          确认
-        </div>
+        <div class="btn" @click="handleConfirm">确认</div>
       </div>
     </div>
   </div>
