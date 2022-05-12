@@ -2,7 +2,7 @@
  * @Author: Jarvis 823867852@qq.com
  * @Date: 2022-05-08 12:44:14
  * @LastEditors: Jarvis 823867852@qq.com
- * @LastEditTime: 2022-05-08 21:34:25
+ * @LastEditTime: 2022-05-12 23:06:12
  * @FilePath: \beautiful-language\src\views\highQuality\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,7 +24,7 @@
           />
         </template>
       </div>
-      <div class="operation px-8 grid grid-rows-1 grid-flow-col gap-4">
+      <div class="operation mt-1 px-8 grid grid-rows-1 grid-flow-col gap-4">
         <div class="btn" @click="handleSave">保存</div>
         <div class="btn" @click="handleReset">重置</div>
         <div class="btn" @click="handleChangeName">更换称号</div>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
+import { ref, unref, reactive, onMounted, onBeforeUnmount } from 'vue'
 import html2canvas from 'html2canvas'
 import { dataURLtoBlob } from '@/utils/tools'
 import messageCard from './components/messageCard.vue'
@@ -61,7 +61,10 @@ onMounted(() => {
   handleScreenResize()
 })
 const handleSave = () => {
-  html2canvas(content.value).then(function (canvas) {
+  html2canvas(unref(content), {
+    width: unref(content).getBoundingClientRect().width,
+    height: unref(content).getBoundingClientRect().height
+  }).then(function (canvas) {
     const base64 = canvas.toDataURL('image/png')
     download(dataURLtoBlob(base64))
   })
